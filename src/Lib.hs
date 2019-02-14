@@ -1,12 +1,16 @@
 module Lib( 
     Code_of_operation,
     Parameter(..),
-    Command(..),
+--    Command(..),
 
-    parse_block,
-    parse_file,
-    show
+--    parse_block,
+--    parse_file,
+      some_func
     ) where
+
+import Data.Char
+import Data.Word
+import Numeric
 
 data Code_of_operation = Invalid_code
                        | AAA
@@ -417,15 +421,40 @@ data Code_of_operation = Invalid_code
                        | XOR
                        | XORPD
                        | XORPS
-                       deriving (Show, Eq)
+  deriving (Show, Eq)
 
 data Parameter = P_Immediate_value Word32
-               | P_absolute_address Word32 Operand_size
+               | P_absolute_address Word32 Parameter_size
                | P_register String Int
                | P_fp_register Int
-               | P_indirect_register String Operand_size
-               | 
-               | P_base_plus_index 
+               | P_indirect_register String Parameter_size
+               | P_intirect_register_with_disp String Int Parameter_size
+               | P_base_plus_index String String Int Parameter_size
+               | P_scaled_index_with_disp String Int Int Parameter_size
+               | P_base_prus_scaled_index_with_disp String String Int Int Parameter_size
+  deriving(Eq)
 
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
+data Parameter_size = PS_NONE
+                    | PS_8
+                    | PS_16
+                    | PS_32
+                    | PS_64
+                    | PS_128
+                    | PS_F_32
+                    | PS_F_64
+                    | PS_F_80
+  deriving(Show, Eq)
+
+data Operation = Bad_operation Word8 String Int [Word8]
+               | Not_operation Int String
+               | Operation { op_code :: Code_of_operation,
+                             op_size :: Parameter_size,
+                             parameters :: [Parameter],
+                             address :: Int,
+                             bytes_array :: [Word8]
+                           }
+  deriving (Eq)
+
+
+some_func :: IO ()
+some_func = putStrLn "some_func"
