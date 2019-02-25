@@ -36,6 +36,7 @@ library
               , bytestring
               , parsec
               , mtl
+              , hapstone
   default-language: Haskell2010
 
 executable osreh-exe
@@ -49,6 +50,7 @@ executable osreh-exe
                 base >=4.7 && <5
               , text
               , osreh
+              , hapstone
   default-language: Haskell2010
 
 test-suite osreh-test
@@ -63,4 +65,5 @@ test-suite osreh-test
                 base >=4.7 && <5
               , text
               , osreh
+              , hapstone
   default-language: Haskell2010
